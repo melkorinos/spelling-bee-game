@@ -21,7 +21,7 @@ const Game: React.FC = () => {
 
   const initializeGame = () => {
     // Initialize the game state, generate letters, set special letter, etc.
-    const letters = GameLogicService.generateRandomLetters(7)
+    const letters = GameLogicService.generateRandomLetters(10)
     const specialLetter = letters[0]
 
     setGame({

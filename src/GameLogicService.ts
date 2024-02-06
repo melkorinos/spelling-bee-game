@@ -2,25 +2,30 @@ import allWords from './words'
 
 const GameLogicService = {
   generateRandomLetters: (count: number): string[] => {
-    const alphabet = 'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ'
-    const uniqueRandomLetters: string[] = []
+    const alphabet = 'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ';
+    const uniqueRandomLetters: string[] = [];
 
     while (uniqueRandomLetters.length < count) {
-      const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)]
+      const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
 
       if (!uniqueRandomLetters.includes(randomLetter)) {
-        uniqueRandomLetters.push(randomLetter)
-        // Store the special letter during the first iteration
+        uniqueRandomLetters.push(randomLetter);
       }
     }
 
-    const specialLetter = uniqueRandomLetters[Math.floor(Math.random() * uniqueRandomLetters.length)]
+    const specialLetterIndex = Math.floor(Math.random() * uniqueRandomLetters.length);
+    const specialLetter = uniqueRandomLetters[specialLetterIndex];
 
-    return [specialLetter, ...uniqueRandomLetters]
+    // Remove the special letter from the list
+    uniqueRandomLetters.splice(specialLetterIndex, 1);
+
+    return [specialLetter, ...uniqueRandomLetters];
   },
 
   isWordValid: (word: string, specialLetter: string): boolean => {
+    console.log('Checking if this word is valid ' + word)
     const index = allWords.indexOf(word.toUpperCase())
+    console.log('This word has this index' + index)
     return word.length >= 4 && word.includes(specialLetter) && index >= 0
   },
 
