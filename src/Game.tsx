@@ -1,11 +1,11 @@
 // src/Game.tsx
 
-import './Game.css'; // Import the CSS file for styling
+import './Game.css' // Import the CSS file for styling
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 
-import GameLogicService from './GameLogicService';
-import { Game as GameModel } from './models/game.model';
+import GameLogicService from './GameLogicService'
+import { Game as GameModel } from './models/game.model'
 
 const Game: React.FC = () => {
   const [game, setGame] = useState<GameModel>({
@@ -13,66 +13,66 @@ const Game: React.FC = () => {
     specialLetter: '',
     currentWord: '',
     score: 0,
-  });
+  })
 
   useEffect(() => {
-    initializeGame();
-  }, []);
+    initializeGame()
+  }, [])
 
   const initializeGame = () => {
     // Initialize the game state, generate letters, set special letter, etc.
-    const letters = GameLogicService.generateRandomLetters();
-    const specialLetter = letters[0];
+    const letters = GameLogicService.generateRandomLetters(7)
+    const specialLetter = letters[0]
 
     setGame({
       letters,
       specialLetter,
       currentWord: '',
       score: 0,
-    });
-  };
+    })
+  }
 
   const handleLetterClick = (letter: string) => {
     // Handle letter clicks to update the current word
     setGame((prevGame) => ({
       ...prevGame,
       currentWord: prevGame.currentWord + letter,
-    }));
-  };
+    }))
+  }
 
   const handleWordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGame((prevGame) => ({
       ...prevGame,
       currentWord: event.target.value.toUpperCase(),
-    }));
-  };
+    }))
+  }
 
   const handleWordSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    submitWord();
-  };
+    event.preventDefault()
+    submitWord()
+  }
 
   const handleEnterKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      submitWord();
+      submitWord()
     }
-  };
+  }
 
   const submitWord = () => {
-    const { currentWord, specialLetter } = game;
+    const { currentWord, specialLetter } = game
 
     if (GameLogicService.isWordValid(currentWord, specialLetter)) {
-      const points = GameLogicService.calculatePoints(currentWord);
+      const points = GameLogicService.calculatePoints(currentWord)
       setGame((prevGame) => ({
         ...prevGame,
         currentWord: '',
         score: prevGame.score + points,
-      }));
+      }))
     } else {
       // Handle invalid word submission (e.g., show a message to the user)
-      console.log('Invalid word!');
+      console.log('Invalid word!')
     }
-  };
+  }
 
   return (
     <div>
@@ -109,7 +109,7 @@ const Game: React.FC = () => {
       </form>
       <button onClick={initializeGame}>Start New Game</button>
     </div>
-  );
-};
+  )
+}
 
-export default Game;
+export default Game

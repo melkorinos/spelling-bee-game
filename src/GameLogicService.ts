@@ -1,38 +1,27 @@
 import allWords from './words'
 
 const GameLogicService = {
-  generateRandomLetters: (): string[] => {
+  generateRandomLetters: (count: number): string[] => {
     const alphabet = 'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ'
-    const randomIndex = Math.floor(Math.random() * alphabet.length)
-    const specialLetter = alphabet[randomIndex]
-    const otherLetters = GameLogicService.generateRandomLettersWithoutSpecial(
-      6,
-      specialLetter
-    )
-    return [specialLetter, ...otherLetters]
-  },
+    const uniqueRandomLetters: string[] = []
 
-  generateRandomLettersWithoutSpecial: (
-    count: number,
-    specialLetter: string
-  ): string[] => {
-    const lettersWithoutSpecial = 'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ'.replace(
-      specialLetter,
-      ''
-    )
-    const randomLetters = []
-    for (let i = 0; i < count; i++) {
-      const randomIndex = Math.floor(
-        Math.random() * lettersWithoutSpecial.length
-      )
-      randomLetters.push(lettersWithoutSpecial[randomIndex])
+    while (uniqueRandomLetters.length < count) {
+      const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)]
+
+      if (!uniqueRandomLetters.includes(randomLetter)) {
+        uniqueRandomLetters.push(randomLetter)
+        // Store the special letter during the first iteration
+      }
     }
-    return randomLetters
+
+    const specialLetter = uniqueRandomLetters[Math.floor(Math.random() * uniqueRandomLetters.length)]
+
+    return [specialLetter, ...uniqueRandomLetters]
   },
 
   isWordValid: (word: string, specialLetter: string): boolean => {
     const index = allWords.indexOf(word.toUpperCase())
-    return word.length >= 4 && word.includes(specialLetter) && index > 0
+    return word.length >= 4 && word.includes(specialLetter) && index >= 0
   },
 
   calculatePoints: (word: string): number => {
