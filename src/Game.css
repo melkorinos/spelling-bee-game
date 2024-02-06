@@ -46,6 +46,13 @@ body {
   font-size: 18px;
 }
 
+.guessed-words-container {
+  margin-top: 20px;
+  background-color: #f1c40f; /* Light yellow background color */
+  padding: 10px;
+  border-radius: 10px;
+}
+
 .button-container {
   margin-top: 20px;
 }

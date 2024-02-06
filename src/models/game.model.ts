@@ -4,5 +4,6 @@ export interface Game {
     specialLetter: string;
     currentWord: string;
     score: number;
+    guessedWords : string[];
   }
   

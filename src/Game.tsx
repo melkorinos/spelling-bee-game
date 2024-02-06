@@ -13,6 +13,7 @@ const Game: React.FC = () => {
     specialLetter: '',
     currentWord: '',
     score: 0,
+    guessedWords: [],
   })
 
   useEffect(() => {
@@ -29,6 +30,7 @@ const Game: React.FC = () => {
       specialLetter,
       currentWord: '',
       score: 0,
+      guessedWords: [],
     })
   }
 
@@ -67,38 +69,32 @@ const Game: React.FC = () => {
         ...prevGame,
         currentWord: '',
         score: prevGame.score + points,
+        guessedWords: [...prevGame.guessedWords, currentWord],
       }))
-    } else {
-      // Handle invalid word submission (e.g., show a message to the user)
-      console.log('Invalid word!')
     }
   }
 
   const handleShuffleClick = () => {
     setGame((prevGame) => {
-      const shuffledLetters = [...prevGame.letters.slice(1)]; // Exclude special letter
+      const shuffledLetters = [...prevGame.letters.slice(1)] // Exclude special letter
       // Shuffle the array
       for (let i = shuffledLetters.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffledLetters[i], shuffledLetters[j]] = [shuffledLetters[j], shuffledLetters[i]];
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[shuffledLetters[i], shuffledLetters[j]] = [shuffledLetters[j], shuffledLetters[i]]
       }
       return {
         ...prevGame,
         letters: [prevGame.specialLetter, ...shuffledLetters],
-      };
-    });
-  };
+      }
+    })
+  }
 
   return (
     <div className="game-container">
       <h1>Spelling Bee Game</h1>
       <div className="letters">
         {game.letters.map((letter, index) => (
-          <div
-            key={index}
-            onClick={() => handleLetterClick(letter)}
-            className={`letter-container ${index === 0 ? 'special-letter' : ''}`}
-          >
+          <div key={index} onClick={() => handleLetterClick(letter)} className={`letter-container ${index === 0 ? 'special-letter' : ''}`}>
             {letter}
           </div>
         ))}
@@ -113,21 +109,18 @@ const Game: React.FC = () => {
         <form onSubmit={handleWordSubmit}>
           <label>
             Enter Word:
-            <input
-              type="text"
-              value={game.currentWord}
-              onChange={handleWordChange}
-              onKeyDown={handleEnterKey}
-            />
+            <input type="text" value={game.currentWord} onChange={handleWordChange} onKeyDown={handleEnterKey} />
           </label>
           <button type="submit">Submit Word</button>
         </form>
         <button onClick={handleShuffleClick}>Shuffle Letters</button>
         <button onClick={initializeGame}>Start New Game</button>
       </div>
+      <div className="guessed-words-container">
+        <p>Guessed Words: {game.guessedWords.join(', ')}</p>
+      </div>
     </div>
-  );
-};
-
+  )
+}
 
 export default Game

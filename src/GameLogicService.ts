@@ -23,9 +23,7 @@ const GameLogicService = {
   },
 
   isWordValid: (word: string, specialLetter: string): boolean => {
-    console.log('Checking if this word is valid ' + word)
     const index = allWords.indexOf(word.toUpperCase())
-    console.log('This word has this index' + index)
     return word.length >= 4 && word.includes(specialLetter) && index >= 0
   },
 
