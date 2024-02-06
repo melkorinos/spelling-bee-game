@@ -90,40 +90,41 @@ const Game: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="game-container">
       <h1>Spelling Bee Game</h1>
-      <div>
-        <p>Letters:</p>
-        <div className="letters">
-          {game.letters.map((letter, index) => (
-            <button
-              key={index}
-              onClick={() => handleLetterClick(letter)}
-              disabled={index === 0}
-              className={index === 0 ? 'special-letter' : 'normal-letter'}
-            >
-              {letter}
-            </button>
-          ))}
-        </div>
-        <p>Special Letter: {game.specialLetter}</p>
+      <div className="letters">
+        {game.letters.map((letter, index) => (
+          <div
+            key={index}
+            onClick={() => handleLetterClick(letter)}
+            className={`letter-container ${index === 0 ? 'special-letter' : ''}`}
+          >
+            {letter}
+          </div>
+        ))}
+      </div>
+      <div className="word-container">
         <p>Current Word: {game.currentWord}</p>
+      </div>
+      <div className="score-container">
         <p>Score: {game.score}</p>
       </div>
-      <form onSubmit={handleWordSubmit}>
-        <label>
-          Enter Word:
-          <input
-            type="text"
-            value={game.currentWord}
-            onChange={handleWordChange}
-            onKeyDown={handleEnterKey}
-          />
-        </label>
-        <button type="submit">Submit Word</button>
-      </form>
-      <button onClick={handleShuffleClick}>Shuffle Letters</button>
-      <button onClick={initializeGame}>Start New Game</button>
+      <div className="button-container">
+        <form onSubmit={handleWordSubmit}>
+          <label>
+            Enter Word:
+            <input
+              type="text"
+              value={game.currentWord}
+              onChange={handleWordChange}
+              onKeyDown={handleEnterKey}
+            />
+          </label>
+          <button type="submit">Submit Word</button>
+        </form>
+        <button onClick={handleShuffleClick}>Shuffle Letters</button>
+        <button onClick={initializeGame}>Start New Game</button>
+      </div>
     </div>
   );
 };
