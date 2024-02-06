@@ -1,0 +1,20 @@
+/* src/Game.css */
+
+.letters {
+    display: flex;
+  }
+  
+  .normal-letter {
+    font-size: 1.5rem;
+    background-color: #e0e0e0; /* Light background color for normal letters */
+    margin: 5px;
+    padding: 10px;
+  }
+  
+  .special-letter {
+    font-size: 1.5rem;
+    background-color: #ffcc00; /* Another color for the background of the special letter */
+    margin: 5px;
+    padding: 10px;
+  }
+  
