@@ -40,9 +40,25 @@ const Game: React.FC = () => {
     }));
   };
 
+  const handleWordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setGame((prevGame) => ({
+      ...prevGame,
+      currentWord: event.target.value.toUpperCase(),
+    }));
+  };
+
   const handleWordSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    submitWord();
+  };
 
+  const handleEnterKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      submitWord();
+    }
+  };
+
+  const submitWord = () => {
     const { currentWord, specialLetter } = game;
 
     if (GameLogicService.isWordValid(currentWord, specialLetter)) {
@@ -82,7 +98,12 @@ const Game: React.FC = () => {
       <form onSubmit={handleWordSubmit}>
         <label>
           Enter Word:
-          <input type="text" value={game.currentWord} onChange={() => {}} disabled />
+          <input
+            type="text"
+            value={game.currentWord}
+            onChange={handleWordChange}
+            onKeyDown={handleEnterKey}
+          />
         </label>
         <button type="submit">Submit Word</button>
       </form>
