@@ -21,7 +21,7 @@ const Game: React.FC = () => {
 
   const initializeGame = () => {
     // Initialize the game state, generate letters, set special letter, etc.
-    const letters = GameLogicService.generateRandomLetters(10)
+    const letters = GameLogicService.generateRandomLetters(7)
     const specialLetter = letters[0]
 
     setGame({
@@ -74,6 +74,21 @@ const Game: React.FC = () => {
     }
   }
 
+  const handleShuffleClick = () => {
+    setGame((prevGame) => {
+      const shuffledLetters = [...prevGame.letters.slice(1)]; // Exclude special letter
+      // Shuffle the array
+      for (let i = shuffledLetters.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledLetters[i], shuffledLetters[j]] = [shuffledLetters[j], shuffledLetters[i]];
+      }
+      return {
+        ...prevGame,
+        letters: [prevGame.specialLetter, ...shuffledLetters],
+      };
+    });
+  };
+
   return (
     <div>
       <h1>Spelling Bee Game</h1>
@@ -107,9 +122,11 @@ const Game: React.FC = () => {
         </label>
         <button type="submit">Submit Word</button>
       </form>
+      <button onClick={handleShuffleClick}>Shuffle Letters</button>
       <button onClick={initializeGame}>Start New Game</button>
     </div>
-  )
-}
+  );
+};
+
 
 export default Game
